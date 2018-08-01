@@ -1,76 +1,12 @@
 # blockbook
 
-## **blockbook is currently in the state of heavy development, do not expect this documentation to be up to date**
+> **blockbook is currently in the state of heavy development, do not expect this documentation to be up to date**
 
-## Build and install using docker
+## Build and installation instructions
 
-Run in the project root
+Develper build guide is [here](/docs/build.md).
 
-```
-make all
-```
-
-to create blockbook debian packages.
-
-## Install manually
-
-Setup go environment (Debian 9):
-
-```
-sudo apt-get update && apt-get install -y \
-    build-essential git wget pkg-config lxc-dev libzmq3-dev libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev
-cd /opt
-wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz && tar xf go1.9.2.linux-amd64.tar.gz
-sudo ln -s /opt/go/bin/go /usr/bin/go
-go help gopath
-```
-
-Install RocksDB: https://github.com/facebook/rocksdb/blob/master/INSTALL.md
-and compile the static_lib and tools
-
-```
-git clone https://github.com/facebook/rocksdb.git
-cd rocksdb
-make release
-```
-
-Setup variables for gorocksdb: https://github.com/tecbot/gorocksdb
-
-```
-export CGO_CFLAGS="-I/path/to/rocksdb/include"
-export CGO_LDFLAGS="-L/path/to/rocksdb -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -llz4"
-```
-
-Install ZeroMQ: https://github.com/zeromq/libzmq
-
-Install go-dep tool:
-```
-RUN go get github.com/golang/dep/cmd/dep
-```
-
-Get blockbook sources, install dependencies, build:
-
-```
-cd $GOPATH/src
-git clone https://github.com/trezor/blockbook.git
-cd blockbook
-dep ensure
-go build
-```
-
-## Usage
-
-```
-./blockbook --help
-```
-
-## Example command
-To run blockbook with fast synchronization, connection to ZeroMQ and providing https and socket.io interface, with database in local directory *data* and connected to local bitcoind with configuration specified by parameter  *-blockchaincfg*:
-```
-./blockbook -sync -blockchaincfg=configs/bitcoin_testnet.json -internal=127.0.0.1:8333 -public=127.0.0.1:8334 -certfile=server/testcert -logtostderr
-```
-Blockbook logs to stderr *-logtostderr* or to directory specified by parameter *-log_dir* . Verbosity of logs can be tuned by command line parameters *-v* and *-vmodule*, details at https://godoc.org/github.com/golang/glog
-
+Sysadmin installation guide is [here](https://wiki.trezor.io/Blockbook).
 
 # Implemented coins
 
@@ -134,28 +70,7 @@ The data are separated to different column families:
 
 ## Registry of ports
 
-| coin                     | blockbook internal port | blockbook public port | backend rpc port   | zmq port |
-|--------------------------|-------------------------|-----------------------|--------------------|----------|
-| Bitcoin                  | 9030                    | 9130                  | 8030               | 38330    |
-| Bcash                    | 9031                    | 9131                  | 8031               | 38331    |
-| Zcash                    | 9032                    | 9132                  | 8032               | 38332    |
-| Dash                     | 9033                    | 9133                  | 8033               | 38333    |
-| Litecoin                 | 9034                    | 9134                  | 8034               | 38334    |
-| Bgold                    | 9035                    | 9135                  | 8035               | 38335    |
-| Ethereum                 | 9036                    | 9136                  | 8036 ws, 8136 http | 38336*   |
-| Ethereum Classic         | 9037                    | 9137                  | 8037               | 38337*   |
-| Dogecoin                 | 9038                    | 9138                  | 8038               | 38338    |
-| Namecoin                 | 9039                    | 9139                  | 8039               | 38339    |
-| Vertcoin                 | 9040                    | 9140                  | 8040               | 38340    |
-| Bitcoin Testnet          | 19030                   | 1913                  | 18030              | 48330    |
-| Bcash Testnet            | 19031                   | 1913                  | 18031              | 48331    |
-| Zcash Testnet            | 19032                   | 1913                  | 18032              | 48332    |
-| Dash Testnet             | 19033                   | 1913                  | 18033              | 48333    |
-| Litecoin Testnet         | 19034                   | 1913                  | 18034              | 48334    |
-| Ethereum Testnet Ropsten | 19036                   | 19136                 | 18036              | 48336*   |
-| Vertcoin Testnet         | 19040                   | 19140                 | 18040              | 48340    |
-
-\* geth listens on this port, however not as zmq service
+Used ports are described [here](/docs/ports.md)
 
 ## Todo
 
