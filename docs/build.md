@@ -65,11 +65,11 @@ go build
 ### Example command
 
 Blockbook require full node daemon as its back-end. You are responsible for proper installation. Port numbers and
-daemon configuration are defined in `configs/coins` and `build/templates/backend/config` directories. You should use
+daemon configuration are defined in *configs/coins* and *build/templates/backend/config* directories. You should use
 specific installation process for particular coin you want run (e.g. https://bitcoin.org/en/full-node#other-linux-distributions for Bitcoin).
 
 When you have running back-end daemon you can start Blockbook. It is highly recomended use ports described in [ports.md](/docs/ports.md)
-for both Blockbook and back-end daemon. You can use `contrib/scripts/build-blockchaincfg.sh` that will generate
+for both Blockbook and back-end daemon. You can use *contrib/scripts/build-blockchaincfg.sh* that will generate
 Blockbook's blockchain configuration from our coin definition files.
 
 Example for Bitcoin:
