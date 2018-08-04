@@ -48,13 +48,13 @@ mandatory, of course.
 
 Makefile targets follow simple pattern, there are few prefixes that define what to build.
 
-* *deb-blockbook-<coin>* – Build Blockbook package for given coin.
+* *deb-blockbook-&lt;coin&gt;* – Build Blockbook package for given coin.
 
-* *deb-backend-<coin>* – Build back-end package for given coin.
+* *deb-backend-&lt;coin&gt;* – Build back-end package for given coin.
 
-* *deb-<coin>* – Build both Blockbook and back-end packages for given coin.
+* *deb-&lt;coin&gt;* – Build both Blockbook and back-end packages for given coin.
 
-* *all-<coin>* – Similar to deb-<coin> but clean repository and rebuild Docker image before package build. It is useful
+* *all-&lt;coin&gt;* – Similar to deb-&lt;coin&gt; but clean repository and rebuild Docker image before package build. It is useful
   for production deployment.
 
 * *all* – Build both Blockbook and back-end packages for all coins.
