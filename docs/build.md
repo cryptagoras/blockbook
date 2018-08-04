@@ -3,12 +3,93 @@
 ## Setting up your development environment
 
 Supported environment to develop Blockbook is Linux. Although it is possible build and run Blockbook on macOS
-or Windows our build system is not prepared for it. But you can still build Blockbook [manually](#manual-build)
+or Windows our build process is not prepared for it. But you can still build Blockbook [manually](#manual-build).
 
 The only dependency required to build Blockbook is Docker. You can see how to install Docker [here](https://docs.docker.com/install/linux/docker-ce/debian/).
 Manual build require additional dependencies that are described in appropriate section.
 
 ## Build in Docker environment
+
+All build operations run in Docker container in order to keep build environment isolated. Makefile in root of repository
+define few targets used for building, testing and packaging of Blockbook. With Docker image definitions and Debian
+package templates in *build/docker* and *build/templates* respectively, they are only inputs that make build process.
+
+Docker build images are created at first execution of Makefile and that information is persisted. (Actually there are
+created two files in repository – .bin-image and .deb-image – that are used as tags.) Sometimes it is necessary to
+rebuild Docker images, it is possible by executing `make build-images`.
+
+### Building binary
+
+Just run `make` and that is it. Output binary is stored in *build* directory. Note that although Blockbook is Go application
+it is dynamically linked with RocksDB dependencies and ZeroMQ. Therefore the operating system where Blockbook will be
+executed still need that dependencies installed. See [Manual build](#manual-build) instructions below or install
+Blockbook via Debian packages.
+
+### Building debug binary
+
+Standard binary contains no debug symbols. Execute `make build-debug` to get binary for debugging.
+
+### Testing
+
+How to execute tests is described in separate document [here](/docs/testing.md).
+
+### Building Debian packages
+
+Blockbook and particular coin back-end are usually deployed together. They are defined in the same place as well.
+So typical way to build Debian packages is build Blockbook and back-end deb packages by single command. But it is not
+mandatory, of course.
+
+> Early releases of Blockbook weren't so friendly for extending. One had to define back-end package, Blockbook package,
+> back-end configuration and Blockbook configuration as well. There were many options that were duplicated across
+> configuration files and therefore error prone.
+>
+> Actually all configuration options and also build options for both Blockbook and backend are defined in single JSON
+> file and all stuff required during build is generated dynamically.
+
+Makefile targets follow simple pattern, there are few prefixes that define what to build.
+
+* *deb-blockbook-<coin>* – Build Blockbook package for given coin.
+
+* *deb-backend-<coin>* – Build back-end package for given coin.
+
+* *deb-<coin>* – Build both Blockbook and back-end packages for given coin.
+
+* *all-<coin>* – Similar to deb-<coin> but clean repository and rebuild Docker image before package build. It is useful
+  for production deployment.
+
+* *all* – Build both Blockbook and back-end packages for all coins.
+
+Which coins are possible to build is defined in *configs/coins*. Particular coin has to have JSON config file there.
+
+For example we want to build some packages for Bitcoin and Bitcoin Testnet.
+
+```bash
+# make all-bitcoin deb-backend-bitcoin_testnet
+...
+# ls build/*.deb
+build/backend-bitcoin_0.16.1-satoshilabs-1_amd64.deb  build/backend-bitcoin-testnet_0.16.1-satoshilabs-1_amd64.deb  build/blockbook-bitcoin_0.0.6_amd64.deb
+```
+
+We have built two backend packages – for Bitcoin and Testnet – and Blockbook package for Bitcoin. Before build have been
+performed there was cleaned build directory and rebuilt Docker image.
+
+### Common notes
+
+There are few variables that can be passed to make in order to modify build process.
+
+In general, build of Blockbook binary require some dependencies. They are downloaded automatically during build process
+but if you need to build the binary repeatedly it consumes a lot of time. Here comes variable *UPDATE_VENDOR* that if is
+unset says that build process uses *vendor* (i.e. dependencies) from your local repository. For example:
+`make deb-bitcoin UPDATE_VENDOR=0`. But before the command is executed there must be *vendor* directory populated,
+you can do it by calling `dep ensure --vendor-only`. See [Manual build](#manual-build) instructions below.
+
+All build targets allow pass additional parameters to underlying command inside container. It is possible via ARGS
+variable. For example if you want run only subset of unit-tests, you will perform it by calling:
+`make test ARGS='-run TestBitcoinRPC' UPDATE_VENDOR=0`
+
+Common behaviour of Docker image build is that build steps are cached and next time they are executed much faster.
+Although this is a good idea, when something went wrong you will need to override this behaviour somehow. This is
+the command: `make build-images NO_CACHE=true`.
 
 ## Manual build
 
