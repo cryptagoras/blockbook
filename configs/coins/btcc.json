@@ -3,7 +3,7 @@
       "name": "Bcore",
       "shortcut": "BTCC",
       "label": "Bitcoin Core",
-      "alias": "bitcoincore"
+      "alias": "btcc"
   },
   "ports": {
     "backend_rpc": 8042,
