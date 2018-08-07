@@ -72,11 +72,11 @@ Sections of the coin definition are described bellow. Good examples are
     * `package_name` – Name of package. See convention note above.
     * `package_revision` – Revision of package. It specifies the version of the back-end package based on the upstream
        version. Usually changes only when there is a change in configuration. (For details about versioning see
-       https://www.debian.org/doc/debian-policy/ch-controlfields.html#version.)
+       [Debian policy](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version).)
     * `system_user` – User used to run back-end service. See convention note above.
     * `version` – Upstream version. Generated package have version in format:
        *&lt;backend.version&gt;-&lt;backend.package_revision&gt;*. (For details about versioning see
-       https://www.debian.org/doc/debian-policy/ch-controlfields.html#version.)
+       [Debian policy](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version).)
     * `binary_url` – URL of back-end archive. See note on back-end package build.
     * `verification_type` – Type of back-end archive verification. Possible values are *gpg*, *gpg-sha256*, *sha256*.
        See note on back-end package build.
@@ -111,7 +111,7 @@ Sections of the coin definition are described bellow. Good examples are
     * `internal_binding_template` – Template for *-internal* parameter. See note on templates below.
     * `public_binding_template` – Template for *-public* parameter. See note on templates below.
     * `explorer_url` – URL of blockchain explorer.
-    * `additional_params` – Additional params of exec command (see [Dogecoin](configs/coins/dogecoin.json)).
+    * `additional_params` – Additional params of exec command (see [Dogecoin definition](configs/coins/dogecoin.json)).
     * `block_chain` – Configuration of BlockChain type that ensures communication with back-end service. All options
        must be tweaked for each individual coin separely.
         * `parse` – Use binary parser for block decoding if *true* else call verbose back-end RPC method that returns
@@ -122,7 +122,7 @@ Sections of the coin definition are described bellow. Good examples are
         * `block_addresses_to_keep` – Number of blocks that are to be kept in blockaddresses column.
         * `additional_params` – Object of coin-specific params.
 
-* `meta` –
+* `meta` – Common package metadata.
     * `package_maintainer` – Full name of package maintainer.
     * `package_maintainer_email` – E-mail of package maintainer.
 
