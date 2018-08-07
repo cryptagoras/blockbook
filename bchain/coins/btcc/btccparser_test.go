@@ -7,7 +7,6 @@ import (
 	"blockbook/bchain/coins/btc"
 	"bytes"
 	"encoding/hex"
-	"reflect"
 	"testing"
 )
 
@@ -169,67 +168,5 @@ func init() {
 				Address: addr3,
 			},
 		},
-	}
-}
-
-func Test_UnpackTx(t *testing.T) {
-	parser1, err := NewBtccParser(GetChainParams("main"), &btc.Configuration{AddressFormat: "legacy"})
-	if err != nil {
-		t.Errorf("NewBtccParser() error = %v", err)
-		return
-	}
-	parser2, err := NewBtccParser(GetChainParams("test"), &btc.Configuration{AddressFormat: "legacy"})
-	if err != nil {
-		t.Errorf("NewBtccParser() error = %v", err)
-		return
-	}
-
-	type args struct {
-		packedTx string
-		parser   *BtccParser
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    *bchain.Tx
-		want1   uint32
-		wantErr bool
-	}{
-		{
-			name: "btc-1",
-			args: args{
-				packedTx: testTxPacked1,
-				parser:   parser1,
-			},
-			want:    &testTx1,
-			want1:   123456,
-			wantErr: false,
-		},
-		{
-			name: "testnet-1",
-			args: args{
-				packedTx: testTxPacked2,
-				parser:   parser2,
-			},
-			want:    &testTx2,
-			want1:   510234,
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			b, _ := hex.DecodeString(tt.args.packedTx)
-			got, got1, err := tt.args.parser.UnpackTx(b)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("unpackTx() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("unpackTx() got = %v, want %v", got, tt.want)
-			}
-			if got1 != tt.want1 {
-				t.Errorf("unpackTx() got1 = %v, want %v", got1, tt.want1)
-			}
-		})
 	}
 }
