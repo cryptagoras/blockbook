@@ -1,6 +1,6 @@
 // +build unittest
 
-package bch
+package btcc
 
 import (
 	"blockbook/bchain"

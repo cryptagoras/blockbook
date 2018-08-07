@@ -1,6 +1,6 @@
 // +build integration
 
-package bch
+package btcc
 
 import (
 	"blockbook/bchain"

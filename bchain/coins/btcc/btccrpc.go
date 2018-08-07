@@ -1,4 +1,4 @@
-package bch
+package btcc
 
 import (
 	"blockbook/bchain"
