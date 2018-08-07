@@ -28,7 +28,7 @@
     "verification_source": "493de3db8b7f94c6423039d231fb64a55fb0c29a9e6ce76e78f1b03cfd6468fa",
     "extract_command": "tar -C backend --strip 1 -xf",
     "exclude_files": [
-        "bin/clashicd-qt"
+        "bin/clashic-qt"
     ],
     "exec_command_template": "{{.Env.BackendInstallPath}}/{{.Coin.Alias}}/bin/clashicd -datadir={{.Env.BackendDataPath}}/{{.Coin.Alias}}/backend -conf={{.Env.BackendInstallPath}}/{{.Coin.Alias}}/{{.Coin.Alias}}.conf -pid=/run/{{.Coin.Alias}}/{{.Coin.Alias}}.pid",
     "logrotate_files_template": "{{.Env.BackendDataPath}}/{{.Coin.Alias}}/backend/*.log",
