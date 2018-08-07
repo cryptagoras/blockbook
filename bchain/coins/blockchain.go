@@ -4,6 +4,7 @@ import (
 	"blockbook/bchain"
 	"blockbook/bchain/coins/bch"
 	"blockbook/bchain/coins/btc"
+	"blockbook/bchain/coins/btcc"
 	"blockbook/bchain/coins/btg"
 	"blockbook/bchain/coins/dash"
 	"blockbook/bchain/coins/dogecoin"
@@ -35,6 +36,7 @@ func init() {
 	blockChainFactories["Zcash Testnet"] = zec.NewZCashRPC
 	blockChainFactories["Ethereum"] = eth.NewEthereumRPC
 	blockChainFactories["Ethereum Testnet Ropsten"] = eth.NewEthereumRPC
+	blockChainFactories["Bcore"] = btcc.NewBtccRPC
 	blockChainFactories["Bcash"] = bch.NewBCashRPC
 	blockChainFactories["Bcash Testnet"] = bch.NewBCashRPC
 	blockChainFactories["Bgold"] = btg.NewBGoldRPC
