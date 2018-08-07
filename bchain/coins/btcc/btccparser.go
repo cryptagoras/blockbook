@@ -9,6 +9,7 @@ import (
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcutil"
 	"github.com/cpacia/bchutil"
+	"github.com/schancel/cashaddr-converter/address"
 )
 
 type AddressFormat = uint8
