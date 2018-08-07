@@ -37,7 +37,7 @@
     "service_additional_params_template": "",
     "protect_memory": true,
     "mainnet": true,
-    "config_file": "clashicd.conf"
+    "config_file": "clashic.conf"
   },
   "blockbook": {
     "package_name": "blockbook-bitcoincore",
